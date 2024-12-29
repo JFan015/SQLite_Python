@@ -35,12 +35,33 @@ def crearTabla(conexion, cursor):
     conexion.close()
     print('Tabla creada correctamente')
 
+def insertarDatos(conexion, cursor, datos):
+    # Definimos la sentencia SQL para insertar datos.
+    # Usamos ? como marcadores de posición para los valores
+    sentencia = "INSERT INTO usuarios VALUES (NULL,?,?,?)"
+
+    try:
+        # Usamos executemany para insertar múltiples filas de datos
+        cursor.executemany(sentencia,datos)
+
+        # Confirmamos los cambios en la base de datos
+        conexion.commit()
+        print("Datos insertados correctamente.")
+    except sqlite3.Error as e:
+        print(f"Error al insertar datos: {e}")
+        conexion.rollback() # Revertimos los cambios si algo salió mal
+    finally:    # Cerramos la conexión, asegurándonos de que siempre se cierre, incluso si ocurre una excepción
+        conexion.close()
+
 if __name__ == '__main__':
-    # Verificamos si este script se está ejecutando directamente.
-    # Esto es útil para evitar que el código se ejecute si se importa como módulo en otro script.
+    # Obtenemos la conexión y el cursor
     con,cursor = conectar() # Llamamos la función conectar y almacenamos los objetos retornados
-    # print(con)  # Imprimimos el objeto de conexión para verificar que se ha establecido correctamente.
-    # print(cursor)   # Imprimimos el objeto cursor para confirmar que está listo para ejecutar comandos SQL.
-    
-    # Llamamos a la función para crear la tabla
-    crearTabla(con, cursor)
+
+    if con is not None and cursor is not None:
+        # Definimos los datos a insertar
+        datos = [('ANTONIO','ANTONIO1234@GMAIL.COM','233JK'),
+                ('ALBERTO','ALBERTO1234@GMAIL.COM','AEO12')]
+        # Llamamos a la función para insertar datos
+        insertarDatos(con, cursor, datos)
+    else:
+        print("No se pudo establecer la conexión a la base de datos.")
