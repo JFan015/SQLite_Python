@@ -3,7 +3,11 @@ import sqlite3  # Importamos la librería SQLite para poder acceder a todas sus 
 def conectar():
     # Establecemos una conexión con la base de datos 'pruebas.db'.
     # Si la base de datos no existe, SQLite lo creará automáticamente.
-    con = sqlite3.connect('pruebas.db')
+    con = sqlite3.connect('pruebas.db') 
+    # Alternativa: usar ':memory:' en lugar de 'pruebas.db' para crear una base de datos temporal en memoria
+    # con = sqlite3.connect(':memory:')   
+    # Esto crearía una base de datos temporal que solo existe en la RAM, útil para pruebas o procesamiento temporal
+    
     # Creamos un objeto cursor que nos permitirá ejecutar comandos SQL en la base de datos.
     cursor = con.cursor()
     # Retornamos tanto la conexión como el cursor para su uso posterior.
