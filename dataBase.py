@@ -53,6 +53,25 @@ def insertarDatos(conexion, cursor, datos):
     finally:    # Cerramos la conexión, asegurándonos de que siempre se cierre, incluso si ocurre una excepción
         conexion.close()
 
+def consultarDatos01(conexion, cursor):
+    # Consulta de todos los usuarios de la tabla
+    sentencia = "SELECT * FROM usuarios"
+    resultado = cursor.execute(sentencia)
+    #print(cursor.fetchall()) #Imprime todo los resultados de una
+    for fila in resultado:
+        print(fila) # Imprime por consola cada fila individualmente
+
+def consultarDatos(conexion, cursor):
+    sentencia = "SELECT id, usuario, email FROM usuarios LIMIT 2"   
+    resultado = cursor.execute(sentencia)
+    #conexion.close()
+    return resultado
+
+def consultarDatos_ID(conexion, cursor, id):
+    sentencia = f"SELECT usuario, email FROM usuarios WHERE id = {id}"
+    resultado = cursor.execute(sentencia)
+    return resultado
+
 if __name__ == '__main__':
     # Obtenemos la conexión y el cursor
     con,cursor = conectar() # Llamamos la función conectar y almacenamos los objetos retornados
@@ -62,6 +81,19 @@ if __name__ == '__main__':
         datos = [('ANTONIO','ANTONIO1234@GMAIL.COM','233JK'),
                 ('ALBERTO','ALBERTO1234@GMAIL.COM','AEO12')]
         # Llamamos a la función para insertar datos
-        insertarDatos(con, cursor, datos)
+        #insertarDatos(con, cursor, datos)
+        resultado = consultarDatos(con, cursor)
+        for fila in resultado:
+            print("*"*100)
+            print("\n")
+            print("ID: " ,fila[0])
+            print("Nombre: " ,fila[1])
+            print("Email_, " ,fila[2])
+            print("\n")
+    
+        resultado = consultarDatos_ID(con, cursor, 15)
+        print(resultado)
+        for fila in resultado:
+            print(fila)
     else:
         print("No se pudo establecer la conexión a la base de datos.")
