@@ -22,17 +22,44 @@ def crearTabla(conexion, cursor):
     conexion.close()
     return True
 
+def insertarAlumno(conexion, cursor):
+    # Solicitamos al usuario que ingrese el nombre del alumno
+    nombre = input('Ingrese el nombre del alumno: ')
+    # Solicitamos al usuario que ingrese el email del alumno
+    email = input('Ingrese el email del alumno: ')
+    # Solicitamos al usuario que ingrese la nota del alumno
+    nota = int(input('Ingrese la nota del alumno: '))
+
+    # Definimos la sentencia SQL para insertar un nuevo alumno
+    sentencia = f"INSERT INTO alumnos VALUES (NULL, ?, ?, ?)"
+    
+    # Creamos una tupla con los datos del alumno
+    datos = (nombre, email, nota)
+
+    # Ejecutamos la sentencia SQL con los datos del alumno
+    cursor.execute(sentencia, datos)
+
+    # Confirmamos los cambios en la base de datos
+    conexion.commit()
+
+    # Cerramos la conexión a la base de datos
+    conexion.close()
+
 def menu():
+    con, cursor = conectar()
+    crearTabla(con, cursor)
     while True:
         print("""
-        Seleccione una opción:
-        0. Salir
-        1. Insertar datos de alumnos
-        """)
-        opcion = int(input("Opción: "))
+    0.  Salir
+    1.  Insertar datos de alumnos    
+          """)
+        opcion = int(input())
         if opcion == 0:
             print("Has salido.")
             break
+        elif opcion == 1:
+            con, cursor = conectar()
+            insertarAlumno()
         else:
             print("Indica una opción válida.")
 
