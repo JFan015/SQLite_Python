@@ -7,13 +7,29 @@ def conectar():
     #   Devolvemos tanto la conexión como el cursor
     return con, cursor  # Esto nos permite usar ambos objetos cuando sea necesario
 
+def crearTabla(conexion, cursor):
+    # Definimos la sentencia SQL para crear la tabla si no existe
+    sentencia = """
+        CREATE TABLE IF NOT EXISTS alumnos
+        (ID INTEGER PRIMARY KEY NOT NULL,
+        NOMBRE TEXT NOT NULL,
+        EMAIL TEXT NOT NULL,
+        NOTA INTEGER NOT NULL)
+    """
+    # Ejecutamos la sentencia SQL
+    cursor.execute(sentencia)
+    # Cerramos la conexión a la base de datos
+    conexion.close()
+    return True
 
 def menu():
     while True:
         print("""
-        0.    Salir
-          """)
-        opcion = int(input())
+        Seleccione una opción:
+        0. Salir
+        1. Insertar datos de alumnos
+        """)
+        opcion = int(input("Opción: "))
         if opcion == 0:
             print("Has salido.")
             break
