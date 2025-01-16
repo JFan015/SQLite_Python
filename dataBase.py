@@ -18,7 +18,7 @@ def conectar():
         return None, None
 
 def crearTabla(conexion, cursor):
-    # Definimosla sentencia SQL para crear la tabla 'usuarios'.
+    # Definimos la sentencia SQL para crear la tabla 'usuarios'.
     # La cláusula IF NOT EXISTS evita errores si la tabla ya existe
     sentencia = """
         CREATE TABLE IF NOT EXISTS usuarios
@@ -31,7 +31,6 @@ def crearTabla(conexion, cursor):
     cursor.execute(sentencia)
 
     # Cerramos la conexión a la base de datos
-    
     conexion.close()
     print('Tabla creada correctamente')
 
@@ -79,30 +78,61 @@ def actualizarDatos(conexion, cursor, id, nombre):
     print("\nDatos actualizados correctamente.\n")
     return True
 
+def borrarDatos(conexion, cursor, id):
+    sentencia = f"DELETE FROM usuarios WHERE id = {id}"
+    cursor.execute(sentencia)
+    conexion.commit()
+    print("Se ha realizado el borrado del registro.")
+    return True
+
+def menu():
+    print("Seleccione una opción:")
+    print("1. Crear tabla")
+    print("2. Insertar datos")
+    print("3. Consultar todos los datos")
+    print("4. Consultar datos con límite")
+    print("5. Consultar datos por ID")
+    print("6. Actualizar datos")
+    print("7. Borrar datos")
+    print("8. Salir")
+
 if __name__ == '__main__':
-    # Obtenemos la conexión y el cursor
-    con,cursor = conectar() # Llamamos la función conectar y almacenamos los objetos retornados
+    while True:
+        menu()
+        opcion = input("Ingrese una opción: ")
+        con, cursor = conectar()
 
-    if con is not None and cursor is not None:
-        # Definimos los datos a insertar
-        datos = [('ANTONIO','ANTONIO1234@GMAIL.COM','233JK'),
-                ('ALBERTO','ALBERTO1234@GMAIL.COM','AEO12')]
-        # Llamamos a la función para insertar datos
-        #insertarDatos(con, cursor, datos)
-        resultado = consultarDatos(con, cursor)
-        for fila in resultado:
-            print("*"*100)
-            print("\n")
-            print("ID: " ,fila[0])
-            print("Nombre: " ,fila[1])
-            print("Email_, " ,fila[2])
-            print("\n")
+        if con is None or cursor is None:
+            print("No se pudo conectar a la base de datos.")
+            continue
+
+        if opcion == '1':
+            crearTabla(con, cursor)
+        elif opcion == '2':
+            # Definimos los datos a insertar
+            datos = [('ANTONIO','ANTONIO1234@GMAIL.COM','233JK'),
+                     ('ALBERTO','ALBERTO1234@GMAIL.COM','AEO12')]
+            insertarDatos(con, cursor, datos)
+        elif opcion == '3':
+            consultarDatos01(con, cursor)
+        elif opcion == '4':
+            resultado = consultarDatos(con, cursor)
+            for fila in resultado:
+                print(fila)
+        elif opcion == '5':
+            id = input("Ingrese el ID: ")
+            resultado = consultarDatos_ID(con, cursor, id)
+            for fila in resultado:
+                print(fila)
+        elif opcion == '6':
+            id = input("Ingrese el ID: ")
+            nombre = input("Ingrese el nuevo nombre: ")
+            actualizarDatos(con, cursor, id, nombre)
+        elif opcion == '7':
+            id = input("Ingrese el ID: ")
+            borrarDatos(con, cursor, id)
+        elif opcion == '8':
+            break
+        else:
+            print("Opción no válida.")
     
-        actualizarDatos(con, cursor, 14, 'ALEX')
-
-        resultado = consultarDatos_ID(con, cursor, 15)
-        #print(resultado)
-        for fila in resultado:
-            print(fila)
-    else:
-        print("No se pudo establecer la conexión a la base de datos.")
