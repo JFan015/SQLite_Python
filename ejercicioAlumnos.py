@@ -57,12 +57,21 @@ def modificarNota(conexion, cursor):
     conexion.commit()
     return True
 
+def borrarAlumno(conexion, cursor):
+    id = input("\nIngresa el identificador del alumno a borrar: ")
+    sentencia = f"DELETE FROM alumnos WHERE id={id}"
+    cursor.execute(sentencia)
+    conexion.commit()
+    print("|nAlumno eliminado de la base de datos correctamente.")
+    return True
+
 def menu():
     menu = """
     0.  Salir
     1.  Insertar datos de alumnos
     2.  Consultar alumnos
     3.  Modificar nota
+    4.  Borrar alumno
           """
     con, cursor = conectar()
     crearTabla(con, cursor)
@@ -90,6 +99,9 @@ def menu():
         elif opcion == 3:
             con, cursor = conectar()
             modificarNota(con,cursor)
+        elif opcion == 4:
+            con, cursor = conectar()
+            borrarAlumno(con, cursor)
         else:
             print("Indica una opción válida.\n")
             print(menu)
