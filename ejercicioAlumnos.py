@@ -49,11 +49,20 @@ def consultarAlumno(conexion, cursor):
     resultado = cursor.execute(sentencia)
     return resultado
 
+def modificarNota(conexion, cursor):
+    id = input("\nIngresa el identificador del alumno: ")
+    nota = input("Ingrese la nota: ")
+    sentencia = f"UPDATE alumnos SET nota ={nota} WHERE id ={id}"
+    cursor.execute(sentencia)
+    conexion.commit()
+    return True
+
 def menu():
     menu = """
     0.  Salir
     1.  Insertar datos de alumnos
     2.  Consultar alumnos
+    3.  Modificar nota
           """
     con, cursor = conectar()
     crearTabla(con, cursor)
@@ -78,6 +87,9 @@ def menu():
                 print("Email: " ,fila[2])
                 print("Nota: " ,fila[3])
                 print("\n")
+        elif opcion == 3:
+            con, cursor = conectar()
+            modificarNota(con,cursor)
         else:
             print("Indica una opción válida.\n")
             print(menu)
