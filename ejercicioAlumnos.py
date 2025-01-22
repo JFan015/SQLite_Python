@@ -28,7 +28,7 @@ def insertarAlumno(conexion, cursor):
     # Solicitamos al usuario que ingrese el email del alumno
     email = input('Ingrese el email del alumno: ')
     # Solicitamos al usuario que ingrese la nota del alumno
-    nota = int(input('Ingrese la nota del alumno: '))
+    nota = input('Ingrese la nota del alumno: ')
 
     # Definimos la sentencia SQL para insertar un nuevo alumno
     sentencia = f"INSERT INTO alumnos VALUES (NULL, ?, ?, ?)"
@@ -36,32 +36,51 @@ def insertarAlumno(conexion, cursor):
     # Creamos una tupla con los datos del alumno
     datos = (nombre, email, nota)
 
+    print("\nAlumno ingresado con éxito.")
+
     # Ejecutamos la sentencia SQL con los datos del alumno
     cursor.execute(sentencia, datos)
 
     # Confirmamos los cambios en la base de datos
     conexion.commit()
 
-    # Cerramos la conexión a la base de datos
-    conexion.close()
+def consultarAlumno(conexion, cursor):
+    sentencia = "SELECT id, nombre, email, nota FROM alumnos"
+    resultado = cursor.execute(sentencia)
+    return resultado
 
 def menu():
+    menu = """
+    0.  Salir
+    1.  Insertar datos de alumnos
+    2.  Consultar alumnos
+          """
     con, cursor = conectar()
     crearTabla(con, cursor)
     while True:
-        print("""
-    0.  Salir
-    1.  Insertar datos de alumnos    
-          """)
+        print(menu)
         opcion = int(input())
         if opcion == 0:
             print("Has salido.")
+            con.close()
             break
         elif opcion == 1:
             con, cursor = conectar()
-            insertarAlumno()
+            insertarAlumno(con, cursor)
+        elif opcion == 2:
+            con, cursor = conectar()
+            resultado = consultarAlumno(con, cursor)
+            for fila in resultado:
+                print("*"*100)
+                print("\n")
+                print("ID: " ,fila[0])
+                print("Nombre: " , fila[1])
+                print("Email: " ,fila[2])
+                print("Nota: " ,fila[3])
+                print("\n")
         else:
-            print("Indica una opción válida.")
+            print("Indica una opción válida.\n")
+            print(menu)
 
 def principal():
     menu()
