@@ -4,7 +4,7 @@ import sqlite3
 def conectar():
     conexion = sqlite3.connect('D:\\Casa\\Base de datos\\SQLite con Python\\SQLite_Python\\ejercicioPractico_CRUD_articulos\\articulos.db')
     cursor = conexion.cursor()
-    print("Conexión establecida con la base de datos con éxito.")
+    #print("Conexión establecida con la base de datos con éxito.")
     return conexion, cursor
 
 # Function to close the database connection
@@ -17,7 +17,7 @@ def crearTabla():
     # Define the table estructure
     cursor.execute('CREATE TABLE IF NOT EXISTS ARTICULOS (IDENTIFICADOR INT PRIMARY KEY, NOMBRE VARCHAR(20), CANTIDAD INT, IMPORTE FLOAT TEXT)')
     cerrar_conexion(conexion)
-    print("Tabla creada correctamente en la base de datos")
+    #print("Tabla creada correctamente en la base de datos")
 
 # Function to permorf initial data load into the table
 def carga_inicial():
@@ -33,7 +33,26 @@ def carga_inicial():
     conexion.commit()   # Confirm changes in database
     cerrar_conexion(conexion)
 
+def insertar_Articulo(articulo):
+    conexion, cursor = conectar()
+    cursor.execute('INSERT INTO ARTICULOS VALUES (?,?,?,?)', articulo)
+    conexion.commit()
+    cerrar_conexion(conexion)
+    print("Artículo insertado correctamente.")
+
+def consulta():
+    conexion, cursor = conectar()
+    cursor.execute('SELECT * FROM ARTICULOS')
+    articulos = cursor.fetchall()
+    return articulos
+
 # Main program block
 if __name__ == '__main__':
     crearTabla()
-    carga_inicial()
+    #carga_inicial()
+    articulo = (1352, "sacapuntas", 100, 0.90)
+    insertar_Articulo(articulo)
+    articulos = consulta()
+    for articulo in articulos:
+        print(articulo[1])
+    
