@@ -48,17 +48,27 @@ def consulta():
     articulos = cursor.fetchall()   # fetch all rows from the query result
     return articulos
 
+# Function to update an existing article in the database
+def actualizar(identificador, nombre, cantidad, importe):
+    conexion, cursor = conectar()
+    cursor.execute(f"UPDATE ARTICULOS SET NOMBRE = '{nombre}', CANTIDAD ='{cantidad}', IMPORTE = {importe} WHERE IDENTIFICADOR = {identificador}")
+    print("Artículo actualizado.")
+    conexion.commit()   # Commit the changes to the database
+    cerrar_conexion(conexion)
+
 # Main program block
 if __name__ == '__main__':
     crearTabla()    
     #carga_inicial()
 
     # Insert a new article
-    articulo = (1352, "sacapuntas", 100, 0.90)
-    insertar_Articulo(articulo)
+    # articulo = (1352, "sacapuntas", 100, 0.90)
+    # insertar_Articulo(articulo)
+
+    # Updating an existing article  
+    actualizar(1352, "sacapuntas negro", 149, 1.00  )
 
     # Query and print all articles names
     articulos = consulta()
     for articulo in articulos:
         print(articulo[1])  # Print the second column (name) of each article
-    
