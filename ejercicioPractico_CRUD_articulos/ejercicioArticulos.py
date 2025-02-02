@@ -33,26 +33,32 @@ def carga_inicial():
     conexion.commit()   # Confirm changes in database
     cerrar_conexion(conexion)
 
+# Function to insert a new article into the database
 def insertar_Articulo(articulo):
     conexion, cursor = conectar()
     cursor.execute('INSERT INTO ARTICULOS VALUES (?,?,?,?)', articulo)
-    conexion.commit()
+    conexion.commit()   # Commit the changes to the database
     cerrar_conexion(conexion)
     print("Artículo insertado correctamente.")
 
+# Function to query all articles from the database
 def consulta():
     conexion, cursor = conectar()
     cursor.execute('SELECT * FROM ARTICULOS')
-    articulos = cursor.fetchall()
+    articulos = cursor.fetchall()   # fetch all rows from the query result
     return articulos
 
 # Main program block
 if __name__ == '__main__':
-    crearTabla()
+    crearTabla()    
     #carga_inicial()
+
+    # Insert a new article
     articulo = (1352, "sacapuntas", 100, 0.90)
     insertar_Articulo(articulo)
+
+    # Query and print all articles names
     articulos = consulta()
     for articulo in articulos:
-        print(articulo[1])
+        print(articulo[1])  # Print the second column (name) of each article
     
