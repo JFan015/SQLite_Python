@@ -1,0 +1,3 @@
+    1.  Crea una aplicación Python para registrar ventas diarias de 2 o 3 tiendas, la aplicación debera ser de
+        tipo ventana (usa tkinter por ejemplo), con 1 botón para borrar datos, otro para grabar y otro para obtener
+        una consulta por fechas.
