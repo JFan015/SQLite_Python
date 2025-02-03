@@ -56,6 +56,14 @@ def actualizar(identificador, nombre, cantidad, importe):
     conexion.commit()   # Commit the changes to the database
     cerrar_conexion(conexion)
 
+# Function to delete an article from the database by its indentifier
+def borrar(identificador):
+    conexion, cursor = conectar()
+    cursor.execute(f"DELETE FROM ARTICULOS WHERE IDENTIFICADOR = {identificador}")
+    conexion.commit()
+    print("Artículo borrado.")
+    conexion.close()    
+
 # Main program block
 if __name__ == '__main__':
     crearTabla()    
@@ -66,7 +74,10 @@ if __name__ == '__main__':
     # insertar_Articulo(articulo)
 
     # Updating an existing article  
-    actualizar(1352, "sacapuntas negro", 149, 1.00  )
+    # actualizar(1352, "sacapuntas negro", 149, 1.00  )
+
+    # Delete an article
+    # borrar(1352)
 
     # Query and print all articles names
     articulos = consulta()
