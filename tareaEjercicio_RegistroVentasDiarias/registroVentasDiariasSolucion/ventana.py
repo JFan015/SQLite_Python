@@ -15,7 +15,7 @@ class Ventana():
         global colorLetra
 
         self.tituloVentana = "Ventas"
-        self.anchoAlto = str(ANCHO)+ " X " +str(ALTO) # 400 x 360
+        self.anchoAlto = f"{ANCHO}x{ALTO}"
         self.ventana = Tk()
         self.ventana.geometry(self.anchoAlto)
         self.ventana.title(self.tituloVentana)
@@ -34,15 +34,19 @@ class Ventana():
     def componentes(self, ventana):
         global colorFondo
         global colorLetra
+        
 
         self.efectivo01 = DoubleVar(value = '0.0')
         self.tarjetas01 = DoubleVar(value = '0.0')
+        self.ventasTi01 = DoubleVar(value = '0.0')
         
         self.efectivo02 = DoubleVar(value = '0.0')
         self.tarjetas02 = DoubleVar(value = '0.0')
+        self.ventasTi02 = DoubleVar(value = '0.0')
         
         self.efectivo03 = DoubleVar(value = '0.0')
         self.tarjetas03 = DoubleVar(value = '0.0')
+        self.ventasTi03 = DoubleVar(value = '0.0')
 
         self.fecha = StringVar(value = '00/00/00')
 
