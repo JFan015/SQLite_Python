@@ -125,10 +125,20 @@ class Ventana():
  
     def mostrar(self):
         ventaTiendas = dameVentas(self.fecha01.get(), self.fecha02.get())
+        fecha = self.fecha.get()
         if ventaTiendas != {}:
             messagebox.showinfo("Ventas", ventaTiendas)
+            texto = ''
+            for clave, valor in ventaTiendas.items():
+                texto = "\n" + texto + clave + ":" +str(valor)+"\n"
+            archivar("D:\\Casa\\Base de datos\\SQLite con Python\\SQLite_Python\\tareaEjercicio_RegistroVentasDiarias\\registroVentasDiariasSolucion\\consulta", fecha, texto)
         else:
             messagebox.showerror("Aviso", "No hay datos, revisa la fecha")
+        texto = ''
+        registros = dameRegistros()
+        for linea in registros:
+            texto = texto + "\n" + str(linea) + "\n"
+        archivar("D:\\Casa\\Base de datos\\SQLite con Python\\SQLite_Python\\tareaEjercicio_RegistroVentasDiarias\\registroVentasDiariasSolucion\\registros", fecha, texto)
 
     def dameFechaActual(self):
         diaAct = time.strftime("%d")
