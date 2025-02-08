@@ -2,4 +2,4 @@
 from ventana import *
 
 if __name__ == "__main__":
-    a
+    ventana = Ventana()

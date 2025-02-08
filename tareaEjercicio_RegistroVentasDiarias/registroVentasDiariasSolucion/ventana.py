@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import time 
 from baseDatos import *
+from archivo import *
 
 class Ventana():
     colorFondo = "#007"
