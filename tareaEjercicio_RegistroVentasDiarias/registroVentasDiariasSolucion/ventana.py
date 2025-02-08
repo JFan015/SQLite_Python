@@ -94,11 +94,32 @@ class Ventana():
     def guardar(self):
         pass
     def borrar(self):
-        pass
+        self.fecha.set("00/00/00")
+        self.fecha01.set("00/00/00")
+        self.fecha02.set("00/00/00")
+
+        self.efectivo01.set(0.0)
+        self.tarjetas01.set(0.0)
+        self.ventasTi01.set(0.0)
+        
+        self.efectivo02.set(0.0)
+        self.tarjetas02.set(0.0)
+        self.ventasTi02.set(0.0)
+ 
+        self.efectivo03.set(0.0)
+        self.tarjetas03.set(0.0)
+        self.ventasTi03.set(0.0)
+ 
     def mostrar(self):
         pass
     def dameFechaActual(self):
-        pass
+        diaAct = time.strftime("%d")
+        mesAct = time.strftime("%m")
+        añoAct = time.strftime("%y")
+        fechaAct = diaAct+"/"+mesAct+"/"+añoAct
+        self.fecha.set(fechaAct)
+        self.fecha01.set(fechaAct)
+        self.fecha02.set(fechaAct)
 
 if __name__ == "__main__":
     ventana = Ventana()
