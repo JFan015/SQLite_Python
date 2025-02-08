@@ -64,19 +64,19 @@ class Ventana():
         etTienda01 = Label(self.ventana, text = "Tienda 01", bg = self.colorFondo, fg = self.colorLetra).place(x = 90, y = 40)
         cjEfectivo01 = Entry(self.ventana, textvariable = self.efectivo01).place(x = 90, y = 70, width = 70)
         cjTarjetas01 = Entry(self.ventana, textvariable = self.tarjetas01).place(x = 90, y = 100, width = 70)
-        cjTotal01 = Entry(self.ventana, textvariable = self.ventasTi01).place(x = 90, y = 130, width = 70)
+        cjTotal01 = Entry(self.ventana, textvariable = self.ventasTi01, state = "disabled").place(x = 90, y = 130, width = 70)
         
         # Tienda 02
         etTienda02 = Label(self.ventana, text = "Tienda 02", bg = self.colorFondo, fg = self.colorLetra).place(x = 180, y = 40)
         cjEfectivo02 = Entry(self.ventana, textvariable = self.efectivo02).place(x = 180, y = 70, width = 70)
         cjTarjetas02 = Entry(self.ventana, textvariable = self.tarjetas02).place(x = 180, y = 100, width = 70)
-        cjTotal02 = Entry(self.ventana, textvariable = self.ventasTi02).place(x = 180, y = 130, width = 70)
+        cjTotal02 = Entry(self.ventana, textvariable = self.ventasTi02, state = "disabled").place(x = 180, y = 130, width = 70)
 
         # Tienda 03
         etTienda03 = Label(self.ventana, text = "Tienda 03", bg = self.colorFondo, fg = self.colorLetra).place(x = 270, y = 40)
         cjEfectivo03 = Entry(self.ventana, textvariable = self.efectivo03).place(x = 270, y = 70, width = 70)
         cjTarjetas03 = Entry(self.ventana, textvariable = self.tarjetas03).place(x = 270, y = 100, width = 70)
-        cjTotal03 = Entry(self.ventana, textvariable = self.ventasTi03).place(x = 270, y = 130, width = 70)
+        cjTotal03 = Entry(self.ventana, textvariable = self.ventasTi03, state = "disabled").place(x = 270, y = 130, width = 70)
 
         btnGuardar = Button(self.ventana, text = "Guardar", command = self.guardar, bg = self.colorFondo, fg = self.colorLetra).place(x = 120, y = 160)
         btnBorrar = Button(self.ventana, text = "Borrar", command = self.borrar, bg = self.colorFondo, fg = self.colorLetra).place(x = 200, y = 160)
@@ -93,7 +93,19 @@ class Ventana():
         btnMostrar = Button(self.ventana, text = "Mostrar", command = self.mostrar, bg = self.colorFondo, fg = self.colorLetra).place(x = 180, y = 280)
     
     def guardar(self):
-        pass
+        self.ventasTi01.set(self.efectivo01.get() + self.tarjetas01.get())
+        self.ventasTi02.set(self.efectivo02.get() + self.tarjetas02.get())
+        self.ventasTi03.set(self.efectivo03.get() + self.tarjetas03.get())
+
+        self.fechaActual = self.fecha.get()
+
+        datos = [
+            (self.fechaActual, "Tienda01", self.efectivo01.get(), self.tarjetas01.get(), self.ventasTi01.get()),
+            (self.fechaActual, "Tienda02", self.efectivo02.get(), self.tarjetas02.get(), self.ventasTi02.get()),
+            (self.fechaActual, "Tienda03", self.efectivo03.get(), self.tarjetas03.get(), self.ventasTi03.get())
+        ] 
+        insertarDatos(datos)
+
     def borrar(self):
         self.fecha.set("00/00/00")
         self.fecha01.set("00/00/00")
@@ -112,7 +124,12 @@ class Ventana():
         self.ventasTi03.set(0.0)
  
     def mostrar(self):
-        pass
+        ventaTiendas = dameVentas(self.fecha01.get(), self.fecha02.get())
+        if ventaTiendas != {}:
+            messagebox.showinfo("Ventas", ventaTiendas)
+        else:
+            messagebox.showerror("Aviso", "No hay datos, revisa la fecha")
+
     def dameFechaActual(self):
         diaAct = time.strftime("%d")
         mesAct = time.strftime("%m")
