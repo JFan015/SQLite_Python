@@ -15,7 +15,7 @@ class Ventana():
         global colorLetra
 
         self.tituloVentana = "Ventas"
-        self.anchoAlto = str(ANCHO) + " X " + str(ALTO) # 400 x 360
+        self.anchoAlto = str(ANCHO)+ " X " +str(ALTO) # 400 x 360
         self.ventana = Tk()
         self.ventana.geometry(self.anchoAlto)
         self.ventana.title(self.tituloVentana)
@@ -23,6 +23,13 @@ class Ventana():
 
         # Componentes
         self.componentes(self.ventana)
+
+        # Borrado o Inicio
+        self.borrar()
+        self.dameFechaActual()
+
+        # Ejecución ventana
+        self.ventana.mainloop()
     
     def componentes(self, ventana):
         global colorFondo
@@ -70,6 +77,24 @@ class Ventana():
         btnBorrar = Button(self.ventana, text = "Borrar", command = self.borrar, bg = self.colorFondo, fg = self.colorLetra).place(x = 200, y = 160)
 
         self.fecha01 = StringVar(value = '00')
+        self.fecha02 = StringVar(value = '00')
+
         etInformacion = Label(self.ventana, text = "Ventas entre fechas indicadas", bg = self.colorFondo, fg = self.colorLetra).place(x = 20, y = 220)
         etFecha01 = Label(self.ventana, text = "Fecha inicial", bg = self.colorFondo, fg = self.colorLetra).place(x = 20, y = 260)
         cjFecha01 = Entry(self.ventana, textvariable = self.fecha01).place(x = 100, y = 260, width = 70)
+        etFecha02 = Label(self.ventana, text = "Fecha inicial", bg = self.colorFondo, fg = self.colorLetra).place(x = 20, y = 300)
+        cjFecha02 = Entry(self.ventana, textvariable = self.fecha01).place(x = 100, y = 300, width = 70)
+
+        btnMostrar = Button(self.ventana, text = "Mostrar", command = self.mostrar, bg = self.colorFondo, fg = self.colorLetra).place(x = 180, y = 280)
+    
+    def guardar(self):
+        pass
+    def borrar(self):
+        pass
+    def mostrar(self):
+        pass
+    def dameFechaActual(self):
+        pass
+
+if __name__ == "__main__":
+    ventana = Ventana()
