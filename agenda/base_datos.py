@@ -19,10 +19,10 @@ class BaseDatosContactos:
     
     def agregar_contacto(self, nombre, telefono):
         consulta = "INSERT INTO contactos (nombre, telefono) VALUES (?, ?)"
-        self.cursor.execute(consulta)
+        self.cursor.execute(consulta, (nombre, telefono))
         self.conexion.commit()
 
-    def listar_contacto(self):
+    def listar_contactos(self):
         consulta = "SELECT * FROM contactos"
         self.cursor.execute(consulta)
         return self.cursor.fetchall()

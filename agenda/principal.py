@@ -3,7 +3,7 @@ from interfaz import AgendaGUI
 from base_datos import BaseDatosContactos
 
 def main():
-    raiz = tk.Tk
+    raiz = tk.Tk()
     controlador_db = BaseDatosContactos()
     app = AgendaGUI(raiz, controlador_db)
     raiz.mainloop()
