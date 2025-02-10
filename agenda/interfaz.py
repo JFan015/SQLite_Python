@@ -12,7 +12,7 @@ class AgendaGUI:
         self.entrada_nombre = tk.Entry(raiz)
         self.etiqueta_telefono = tk.Label(raiz, text = "Teléfono")
         self.entrada_telefono = tk.Entry(raiz)
-        self.boton_agregar = tk.Button(raiz, text = 'Agregar contactos', command = self.agregar_contactos)
+        self.boton_agregar = tk.Button(raiz, text = 'Agregar contacto', command = self.agregar_contacto)
         self.boton_listar = tk.Button(raiz, text = 'Listar contactos', command = self.listar_contactos)
 
         # Posicionar widgets
@@ -39,4 +39,3 @@ class AgendaGUI:
         contactos = self.db.listar_contactos()
         lista = "\n".join([f"{c[1]}:{c[2]}" for c in contactos])
         messagebox.showinfo("Contactos", lista)
-        

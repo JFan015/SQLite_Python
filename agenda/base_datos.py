@@ -2,7 +2,7 @@ import sqlite3
 
 class BaseDatosContactos:
 
-    def __init__(self, nombre_db = "D:\\Casa\\Base de datos\\SQLite con Python\\SQLite_Python\\ejercicioPractico_CRUD_articulos\\contactos.db"):
+    def __init__(self, nombre_db = "D:\\Casa\\Base de datos\\SQLite con Python\\SQLite_Python\\agenda\\contactos.db"):
         self.conexion = sqlite3.connect(nombre_db)
         self.cursor = self.conexion .cursor()
         self.crear_tabla()
